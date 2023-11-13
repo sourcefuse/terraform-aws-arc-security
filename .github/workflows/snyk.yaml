@@ -13,7 +13,7 @@ on:  # yamllint disable-line rule:truthy
 jobs:
   security:
     runs-on:
-      - arc
+      - ubuntu-latest
     name: snyk
     steps:
       - name: checkout
