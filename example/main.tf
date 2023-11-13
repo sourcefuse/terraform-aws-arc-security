@@ -16,7 +16,7 @@ provider "aws" {
 }
 
 module "cloud_security" {
-  source = "../"
+  source = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=feature/working-example"
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
