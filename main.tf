@@ -66,7 +66,7 @@ module "config" {
   name        = "${var.environment}-${var.namespace}-aws-config"
 
   create_sns_topic                 = var.create_sns_topic
-  create_iam_role                  = var.create_iam_role
+  create_iam_role                  = var.create_config_iam_role
   force_destroy                    = var.force_destroy
   global_resource_collector_region = var.region
   managed_rules                    = length(var.managed_rules) > 0 ? var.managed_rules : local.managed_rules
@@ -75,6 +75,21 @@ module "config" {
   subscribers           = length(var.aws_config_sns_subscribers) > 0 ? var.aws_config_sns_subscribers : local.aws_config_sns_subscribers
 
   tags = module.tags.tags
+}
+
+module "inspector" {
+
+  source  = "cloudposse/inspector/aws"
+  version = "0.4.0"
+
+  enabled = var.create_inspector
+
+  name = "${var.environment}-${var.namespace}-aws-inspector"
+  namespace   = var.namespace
+  create_iam_role = var.create_inspector_iam_role
+  enabled_rules   = var.inspector_enabled_rules
+  schedule_expression = var.inspector_schedule_expression
+  assessment_event_subscription = var.inspector_assessment_event_subscription
 }
 
 module "tags" {

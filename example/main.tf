@@ -16,21 +16,28 @@ provider "aws" {
 }
 
 module "cloud_security" {
-  source = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=feature/working-example"
+  # source      = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=feature/working-example"
+  source      = "../" // local development
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
   project     = var.project
 
-  create_sns_topic = true
-  create_iam_role  = true
-  force_destroy    = true
+  create_sns_topic       = true
+  create_config_iam_role = true
+  force_destroy          = true
 
-  managed_rules = var.managed_rules
-  aws_config_sns_subscribers = var.aws_config_sns_subscribers
-  guard_duty_sns_subscribers = var.guard_duty_sns_subscribers
+  managed_rules                = var.managed_rules
+  aws_config_sns_subscribers   = var.aws_config_sns_subscribers
+  guard_duty_sns_subscribers   = var.guard_duty_sns_subscribers
   security_hub_sns_subscribers = var.security_hub_sns_subscribers
-  enabled_standards = var.enabled_standards
+  enabled_standards            = var.enabled_standards
+
+  create_inspector                        = var.create_inspector
+  create_inspector_iam_role               = var.create_inspector_iam_role
+  inspector_enabled_rules                 = var.inspector_enabled_rules
+  inspector_schedule_expression           = var.inspector_schedule_expression
+  inspector_assessment_event_subscription = var.inspector_assessment_event_subscription
 }
 
 

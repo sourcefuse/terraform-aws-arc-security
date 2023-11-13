@@ -39,7 +39,7 @@ variable "create_sns_topic" {
   default     = false
 }
 
-variable "create_iam_role" {
+variable "create_config_iam_role" {
   description = "Flag to indicate whether an iam role should be created for aws config."
   type        = bool
   default     = false
@@ -184,3 +184,38 @@ variable "aws_config_sns_subscribers" {
     }
   }
 }
+
+
+variable "create_inspector" {
+  description = "Toggle to create aws inspector"
+  type = bool
+  default = false
+}
+
+variable "create_inspector_iam_role" {
+  description = "Toggle to create aws inspector iam role"
+  type = bool
+  default = true
+}
+
+variable "inspector_enabled_rules" {
+  description = "list of rules to pass to inspector"
+  type = list(string)
+  default = []
+}
+
+variable "inspector_schedule_expression" {
+  description = "AWS Schedule Expression to indicate how often the inspector scheduled event shoud run"
+  type = string
+  default = "rate(7 days)"
+}
+
+variable "inspector_assessment_event_subscription" {
+  description = "Configures sending notifications about a specified assessment template event to a designated SNS topic"
+  type = map(object({
+    event     = string
+    topic_arn = string
+  }))
+  default = {}
+}
+
