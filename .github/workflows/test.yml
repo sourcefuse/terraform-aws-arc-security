@@ -33,7 +33,7 @@ jobs:
 
   checkov:
     runs-on:
-      - arc
+      - ubuntu-latest
     name: checkov
     steps:
       - uses: actions/checkout@master
