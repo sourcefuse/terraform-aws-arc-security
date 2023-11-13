@@ -18,7 +18,7 @@ module "security_hub" {
   source  = "cloudposse/security-hub/aws"
   version = "0.10.0"
 
-  name        = local.name_prefix
+  name = local.name_prefix
 
   create_sns_topic  = var.create_sns_topic
   enabled_standards = var.enabled_standards
@@ -31,7 +31,7 @@ module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
 
-  name        = local.name_prefix
+  name = local.name_prefix
 
   create_sns_topic      = var.create_sns_topic
   enable_cloudwatch     = var.enable_cloudwatch
