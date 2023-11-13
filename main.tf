@@ -18,9 +18,7 @@ module "security_hub" {
   source  = "cloudposse/security-hub/aws"
   version = "0.10.0"
 
-  environment = var.environment
-  namespace   = var.namespace
-  name        = "${var.environment}-${var.namespace}-security-hub"
+  name        = local.name_prefix
 
   create_sns_topic  = var.create_sns_topic
   enabled_standards = var.enabled_standards
@@ -33,9 +31,7 @@ module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
 
-  environment = var.environment
-  namespace   = var.namespace
-  name        = "${var.environment}-${var.namespace}-guard-duty"
+  name        = local.name_prefix
 
   create_sns_topic      = var.create_sns_topic
   enable_cloudwatch     = var.enable_cloudwatch
@@ -49,9 +45,7 @@ module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
   version = "1.0.0"
 
-  environment   = var.environment
-  namespace     = var.namespace
-  name          = "${var.environment}-${var.namespace}-aws-config-storage"
+  name          = local.name_prefix
   force_destroy = var.force_destroy
 
   tags = module.tags.tags
@@ -61,9 +55,7 @@ module "config" {
   source  = "cloudposse/config/aws"
   version = "1.1.0"
 
-  environment = var.environment
-  namespace   = var.namespace
-  name        = "${var.environment}-${var.namespace}-aws-config"
+  name = local.name_prefix
 
   create_sns_topic                 = var.create_sns_topic
   create_iam_role                  = var.create_config_iam_role
@@ -72,7 +64,7 @@ module "config" {
   managed_rules                    = length(var.managed_rules) > 0 ? var.managed_rules : local.managed_rules
   s3_bucket_id                     = module.aws_config_storage.bucket_id
   s3_bucket_arn                    = module.aws_config_storage.bucket_arn
-  subscribers           = length(var.aws_config_sns_subscribers) > 0 ? var.aws_config_sns_subscribers : local.aws_config_sns_subscribers
+  subscribers                      = length(var.aws_config_sns_subscribers) > 0 ? var.aws_config_sns_subscribers : local.aws_config_sns_subscribers
 
   tags = module.tags.tags
 }
@@ -84,11 +76,10 @@ module "inspector" {
 
   enabled = var.create_inspector
 
-  name = "${var.environment}-${var.namespace}-aws-inspector"
-  namespace   = var.namespace
-  create_iam_role = var.create_inspector_iam_role
-  enabled_rules   = var.inspector_enabled_rules
-  schedule_expression = var.inspector_schedule_expression
+  name                          = local.name_prefix
+  create_iam_role               = var.create_inspector_iam_role
+  enabled_rules                 = var.inspector_enabled_rules
+  schedule_expression           = var.inspector_schedule_expression
   assessment_event_subscription = var.inspector_assessment_event_subscription
 }
 
@@ -96,8 +87,8 @@ module "tags" {
   source  = "sourcefuse/arc-tags/aws"
   version = "1.2.3"
 
-  environment = var.environment
-  project     = var.project
+  environment = local.environment
+  project     = local.project
 
   extra_tags = {
     Repo         = "github.com/sourcefuse/terraform-aws-arc-security"
