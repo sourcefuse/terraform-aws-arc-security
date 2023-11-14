@@ -1,6 +1,40 @@
-# terraform-aws-module-template example
+# [terraform-aws-arc-security](https://github.com/sourcefuse/terraform-aws-arc-security)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Overview
+
+AWS Security for the SourceFuse DevOps Reference Architecture Infrastructure.
+
+## First Time Usage
+```shell
+terraform init -backend-config=config.dev.hcl
+```
+
+Create a `dev` workspace
+```shell
+terraform workspace new dev
+```
+
+Apply Terraform
+```shell
+terraform apply
+```
+
+## Production Setup
+```shell
+terraform init -backend-config=config.prod.hcl
+```
+
+Create a `prod` workspace
+```shell
+terraform workspace new prod
+```
+
+Apply Terraform
+```shell
+terraform apply -var-file=prod.tfvars
+```
+
+
 ## Requirements
 
 | Name | Version |

@@ -10,7 +10,7 @@ jobs:
   ## tag
   tag:
     runs-on:
-      - arc
+      - ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 

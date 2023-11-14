@@ -2,7 +2,7 @@
 
 ## Overview
 
-SourceFuse AWS Reference Architecture (ARC) Terraform module for managing _________.
+SourceFuse AWS Reference Architecture (ARC) Terraform module for managing Security Hub components.
 
 ## Usage
 
@@ -10,7 +10,7 @@ To see a full example, check out the [main.tf](./example/main.tf) file in the ex
 
 ```hcl
 module "this" {
-  source = "git::https://github.com/sourcefuse/terraform-aws-refarch-<module_name>"
+  source = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git"
 }
 ```
 
