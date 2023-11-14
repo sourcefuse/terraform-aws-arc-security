@@ -46,7 +46,11 @@ security_hub_sns_subscribers = {
     raw_message_delivery   = false
   }
 }
-enabled_standards = ["standards/aws-foundational-security-best-practices/v/1.0.0", "ruleset/cis-aws-foundations-benchmark/v/1.2.0"]
+enabled_standards = [
+  "standards/aws-foundational-security-best-practices/v/1.0.0",
+  "standards/cis-aws-foundations-benchmark/v/1.4.0",
+  "ruleset/cis-aws-foundations-benchmark/v/1.2.0"
+]
 
 
 create_inspector              = false
