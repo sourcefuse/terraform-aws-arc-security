@@ -28,12 +28,6 @@ variable "enabled_standards" {
   default     = []
 }
 
-variable "create_sns_topic" {
-  description = "Flag to indicate whether an SNS topic should be created for notifications."
-  type        = bool
-  default     = false
-}
-
 variable "create_config_iam_role" {
   description = "Flag to indicate whether an iam role should be created for aws config."
   type        = bool
@@ -43,12 +37,6 @@ variable "create_config_iam_role" {
 variable "config_storage_bucket_force_destroy" {
   type        = bool
   description = "A boolean that indicates all objects should be deleted from the config storage bucket so that the bucket can be destroyed without error. These objects are not recoverable"
-  default     = false
-}
-
-variable "enable_cloudwatch" {
-  description = "Flag to indicate whether to enable cloudwatch for logging."
-  type        = bool
   default     = false
 }
 
@@ -211,9 +199,4 @@ variable "inspector_schedule_expression" {
   default     = "rate(7 days)"
 }
 
-variable "inspector_assessment_events" {
-  description = "List of specified assessment event to send to designated SNS topic"
-  type        = list(string)
-  default     = []
-}
 

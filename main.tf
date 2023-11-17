@@ -58,8 +58,8 @@ module "config" {
   name = local.name_prefix
 
   create_sns_topic                 = true
-  sns_encryption_key_id            = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
-  sqs_queue_kms_master_key_id      = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
+  sns_encryption_key_id            = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : aws_kms_alias.cloud_security.name
+  sqs_queue_kms_master_key_id      = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : aws_kms_alias.cloud_security.name
   create_iam_role                  = var.create_config_iam_role
   force_destroy                    = var.force_destroy
   global_resource_collector_region = var.region
