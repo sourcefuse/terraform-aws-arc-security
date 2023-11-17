@@ -16,8 +16,8 @@ provider "aws" {
 }
 
 module "cloud_security" {
-  # source      = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=feature/working-example"
-  source      = "../" // local development
+  source      = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=bugfix/sns-encrypt-cmk"
+  # source      = "../" // local testing
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
