@@ -26,6 +26,7 @@ module "cloud_security" {
   create_sns_topic       = true
   create_config_iam_role = true
   force_destroy          = true
+  config_storage_bucket_force_destroy = var.config_storage_bucket_force_destroy
 
   managed_rules                = var.managed_rules
   aws_config_sns_subscribers   = var.aws_config_sns_subscribers
@@ -37,7 +38,9 @@ module "cloud_security" {
   create_inspector_iam_role               = var.create_inspector_iam_role
   inspector_enabled_rules                 = var.inspector_enabled_rules
   inspector_schedule_expression           = var.inspector_schedule_expression
-  inspector_assessment_event_subscription = var.inspector_assessment_event_subscription
+  # inspector_assessment_events = var.inspector_assessment_events
+
+  cloud_security_kms_key_id = var.cloud_security_kms_key_id
 }
 
 

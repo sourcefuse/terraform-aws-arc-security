@@ -1,16 +1,5 @@
 ## shared
 ################################################################################
-variable "namespace" {
-  type        = string
-  description = "Namespace for the resources."
-}
-
-variable "environment" {
-  type        = string
-  default     = "poc"
-  description = "ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT'"
-}
-
 variable "region" {
   type        = string
   description = "AWS region"
@@ -20,6 +9,12 @@ variable "region" {
 variable "project" {
   type        = string
   description = "The project name"
+  default     = ""
+}
+
+variable "cloud_security_kms_key_id" {
+  type        = string
+  description = "kms key id used to encrypt sns topics"
   default     = ""
 }
 
@@ -42,6 +37,12 @@ variable "create_sns_topic" {
 variable "create_config_iam_role" {
   description = "Flag to indicate whether an iam role should be created for aws config."
   type        = bool
+  default     = false
+}
+
+variable "config_storage_bucket_force_destroy" {
+  type        = bool
+  description = "A boolean that indicates all objects should be deleted from the config storage bucket so that the bucket can be destroyed without error. These objects are not recoverable"
   default     = false
 }
 
@@ -210,12 +211,9 @@ variable "inspector_schedule_expression" {
   default     = "rate(7 days)"
 }
 
-variable "inspector_assessment_event_subscription" {
-  description = "Configures sending notifications about a specified assessment template event to a designated SNS topic"
-  type = map(object({
-    event     = string
-    topic_arn = string
-  }))
-  default = {}
+variable "inspector_assessment_events" {
+  description = "List of specified assessment event to send to designated SNS topic"
+  type = list(string)
+  default = []
 }
 

@@ -23,6 +23,12 @@ variable "project" {
   default     = ""
 }
 
+variable "cloud_security_kms_key_id" {
+  type        = string
+  description = "kms key id used to encrypt sns topics"
+  default     = ""
+}
+
 ############################################################################
 ## security hub
 ############################################################################
@@ -185,6 +191,13 @@ variable "aws_config_sns_subscribers" {
   }
 }
 
+variable "config_storage_bucket_force_destroy" {
+  type        = bool
+  description = "A boolean that indicates all objects should be deleted from the config storage bucket so that the bucket can be destroyed without error. These objects are not recoverable"
+  default     = false
+}
+
+
 variable "create_inspector" {
   description = "Toggle to create aws inspector"
   type        = bool
@@ -209,11 +222,9 @@ variable "inspector_schedule_expression" {
   default     = "rate(7 days)"
 }
 
-variable "inspector_assessment_event_subscription" {
-  description = "Configures sending notifications about a specified assessment template event to a designated SNS topic"
-  type = map(object({
-    event     = string
-    topic_arn = string
-  }))
-  default = {}
-}
+# variable "inspector_assessment_events" {
+#   description = "List of specified assessment event to send to designated SNS topic"
+#   type = list(string)
+#   default = []
+# }
+
