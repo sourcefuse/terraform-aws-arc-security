@@ -1,36 +1,11 @@
 locals {
 
-  environment = var.environment
-  project     = var.project
-  name_prefix = "${var.namespace}-${var.environment}"
+  environment               = var.environment
+  project                   = var.project
+  name_prefix               = "${var.namespace}-${var.environment}"
+  guard_duty_sns_topic_name = "${local.name_prefix}-guard-duty"
 
-  guard_duty_sns_subscribers = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
-  security_hub_sns_subscribers = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
-
-  aws_config_sns_subscribers = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
-
-  managed_rules = {
+  aws_config_managed_rules = {
     access-keys-rotated = {
       identifier  = "ACCESS_KEYS_ROTATED"
       description = "Checks whether the active access keys are rotated within the number of days specified in maxAccessKeyAge. The rule is NON_COMPLIANT if the access keys have not been rotated for more than maxAccessKeyAge number of days."

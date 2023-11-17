@@ -27,16 +27,29 @@ variable "project" {
 ## security hub
 ############################################################################
 
-variable "enabled_standards" {
-  description = "A list of standards to enable in the account"
-  type        = list(string)
-  default     = []
+variable "enable_security_hub" {
+  description = "Whether to enable Security Hub"
+  type        = bool
+  default     = true
 }
 
-variable "create_sns_topic" {
-  description = "Flag to indicate whether an SNS topic should be created for notifications."
-  type        = bool
-  default     = false
+variable "enabled_security_hub_standards" {
+  description = <<-DOC
+  A list of standards/rulesets to enable
+
+  See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/securityhub_standards_subscription#argument-reference
+
+  The possible values are:
+
+    - standards/aws-foundational-security-best-practices/v/1.0.0
+    - ruleset/cis-aws-foundations-benchmark/v/1.2.0
+    - standards/pci-dss/v/3.2.1
+  DOC
+  type        = list(any)
+  default = [
+    "standards/aws-foundational-security-best-practices/v/1.0.0",
+    "ruleset/cis-aws-foundations-benchmark/v/1.2.0"
+  ]
 }
 
 variable "create_config_iam_role" {
@@ -45,25 +58,13 @@ variable "create_config_iam_role" {
   default     = false
 }
 
-variable "enable_cloudwatch" {
-  description = "Flag to indicate whether to enable cloudwatch for logging."
-  type        = bool
-  default     = false
-}
-
-variable "s3_protection_enabled" {
+variable "guard_duty_s3_protection_enabled" {
   description = "Flag to indicate whether S3 protection will be turned on in GuardDuty."
   type        = bool
   default     = false
 }
 
-variable "force_destroy" {
-  type        = bool
-  description = "A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable"
-  default     = false
-}
-
-variable "managed_rules" {
+variable "aws_config_managed_rules" {
   description = <<-DOC
     A list of AWS Managed Rules that should be enabled on the account.
 
@@ -105,14 +106,12 @@ variable "security_hub_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
+}
+
+variable "enable_guard_duty" {
+  description = "Whether to enable Guard Duty"
+  type        = bool
+  default     = true
 }
 
 variable "guard_duty_sns_subscribers" {
@@ -140,14 +139,12 @@ variable "guard_duty_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
+}
+
+variable "enable_aws_config" {
+  description = "Whether to enable AWS Config"
+  type        = bool
+  default     = true
 }
 
 variable "aws_config_sns_subscribers" {
@@ -175,21 +172,13 @@ variable "aws_config_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
 }
 
 
-variable "create_inspector" {
-  description = "Toggle to create aws inspector"
+variable "enable_inspector" {
+  description = "Whether to enable Inspector"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "create_inspector_iam_role" {
@@ -219,3 +208,7 @@ variable "inspector_assessment_event_subscription" {
   default = {}
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "Tags for AWS resources"
+}
