@@ -31,14 +31,14 @@ module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
 
-  name = local.name_prefix
-  create_sns_topic      = false
+  name                      = local.name_prefix
+  create_sns_topic          = false
   findings_notification_arn = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${local.name_prefix}-guard-duty"
-  s3_protection_enabled = var.s3_protection_enabled
+  s3_protection_enabled     = var.s3_protection_enabled
 
   tags = module.tags.tags
 
-  depends_on = [ module.sns_guard_duty ]
+  depends_on = [module.sns_guard_duty]
 }
 
 module "aws_config_storage" {
@@ -58,8 +58,8 @@ module "config" {
   name = local.name_prefix
 
   create_sns_topic                 = true
-  sns_encryption_key_id = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
-  sqs_queue_kms_master_key_id = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
+  sns_encryption_key_id            = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
+  sqs_queue_kms_master_key_id      = length(var.cloud_security_kms_key_id) > 0 ? var.cloud_security_kms_key_id : "${aws_kms_alias.cloud_security.name}"
   create_iam_role                  = var.create_config_iam_role
   force_destroy                    = var.force_destroy
   global_resource_collector_region = var.region
@@ -69,7 +69,7 @@ module "config" {
   subscribers                      = length(var.aws_config_sns_subscribers) > 0 ? var.aws_config_sns_subscribers : local.aws_config_sns_subscribers
 
   tags = module.tags.tags
-  
+
 }
 
 module "inspector" {
@@ -87,7 +87,7 @@ module "inspector" {
 
   tags = module.tags.tags
 
-  depends_on = [ module.sns_inspector ]
+  depends_on = [module.sns_inspector]
 }
 
 module "tags" {

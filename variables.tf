@@ -213,7 +213,7 @@ variable "inspector_schedule_expression" {
 
 variable "inspector_assessment_events" {
   description = "List of specified assessment event to send to designated SNS topic"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 

@@ -23,9 +23,9 @@ module "cloud_security" {
   namespace   = var.namespace
   project     = var.project
 
-  create_sns_topic       = true
-  create_config_iam_role = true
-  force_destroy          = true
+  create_sns_topic                    = true
+  create_config_iam_role              = true
+  force_destroy                       = true
   config_storage_bucket_force_destroy = var.config_storage_bucket_force_destroy
 
   managed_rules                = var.managed_rules
@@ -34,10 +34,10 @@ module "cloud_security" {
   security_hub_sns_subscribers = var.security_hub_sns_subscribers
   enabled_standards            = var.enabled_standards
 
-  create_inspector                        = var.create_inspector
-  create_inspector_iam_role               = var.create_inspector_iam_role
-  inspector_enabled_rules                 = var.inspector_enabled_rules
-  inspector_schedule_expression           = var.inspector_schedule_expression
+  create_inspector              = var.create_inspector
+  create_inspector_iam_role     = var.create_inspector_iam_role
+  inspector_enabled_rules       = var.inspector_enabled_rules
+  inspector_schedule_expression = var.inspector_schedule_expression
   # inspector_assessment_events = var.inspector_assessment_events
 
   cloud_security_kms_key_id = var.cloud_security_kms_key_id

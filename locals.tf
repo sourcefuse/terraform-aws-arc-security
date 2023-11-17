@@ -6,7 +6,7 @@ locals {
 
   assessment_event_subscriptions = {
     assessment_completed = {
-      event = "ASSESSMENT_RUN_COMPLETED"
+      event     = "ASSESSMENT_RUN_COMPLETED"
       topic_arn = "${module.sns_inspector.sns_topic_arn}"
     }
   }

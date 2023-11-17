@@ -20,7 +20,7 @@ module "sns_guard_duty" {
   namespace         = var.namespace
   kms_master_key_id = aws_kms_key.cloud_security.arn
   sqs_dlq_enabled   = false
-  
+
   subscribers = length(var.guard_duty_sns_subscribers) > 0 ? var.guard_duty_sns_subscribers : local.guard_duty_sns_subscribers
 }
 
