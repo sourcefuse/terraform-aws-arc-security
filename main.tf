@@ -36,13 +36,9 @@ module "guard_duty" {
 
   name = local.name_prefix
 
-  create_sns_topic      = false
-  enable_cloudwatch     = true
-  s3_protection_enabled = var.guard_duty_s3_protection_enabled
-  // Hardcoded sns arn to avoid : The "count" value depends on resource attributes that cannot be determined until apply,
-  // so Terraform cannot predict how many instances will be created. To work around
-  // this, use the -target argument to first apply only the resources that the count depends on.
-  // TODO
+  create_sns_topic          = false
+  enable_cloudwatch         = true
+  s3_protection_enabled     = var.guard_duty_s3_protection_enabled
   findings_notification_arn = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${local.guard_duty_sns_topic_name}"
   depends_on                = [module.sns_guard_duty]
   tags                      = var.tags

@@ -46,10 +46,11 @@ module "cloud_security" {
 
   create_config_iam_role = true
 
-  aws_config_sns_subscribers   = var.aws_config_sns_subscribers
-  guard_duty_sns_subscribers   = var.guard_duty_sns_subscribers
-  security_hub_sns_subscribers = var.security_hub_sns_subscribers
+  aws_config_sns_subscribers   = local.aws_config_sns_subscribers
+  guard_duty_sns_subscribers   = local.guard_duty_sns_subscribers
+  security_hub_sns_subscribers = local.security_hub_sns_subscribers
 
+  aws_config_managed_rules = var.aws_config_managed_rules
 
   create_inspector_iam_role               = var.create_inspector_iam_role
   inspector_enabled_rules                 = var.inspector_enabled_rules
