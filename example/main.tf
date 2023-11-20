@@ -37,9 +37,8 @@ module "cloud_security" {
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
-  project     = var.project
 
-  enable_inspector    = true
+  enable_inspector    = false
   enable_aws_config   = true
   enable_guard_duty   = true
   enable_security_hub = true
