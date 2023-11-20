@@ -1,6 +1,7 @@
 # terraform-aws-module-template
 
 ## Overview
+[![Known Vulnerabilities](https://github.com/sourcefuse/terraform-aws-arc-security/actions/workflows/snyk.yaml/badge.svg)](https://github.com/sourcefuse/terraform-aws-arc-security/actions/workflows/snyk.yaml)
 
 SourceFuse AWS Reference Architecture (ARC) Terraform module for managing Security Hub components.
 

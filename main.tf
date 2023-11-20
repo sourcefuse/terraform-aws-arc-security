@@ -28,6 +28,10 @@ module "security_hub" {
   tags = var.tags
 }
 
+################################################################################
+## Guard Duty
+################################################################################
+
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
@@ -43,6 +47,10 @@ module "guard_duty" {
   depends_on                = [module.sns_guard_duty]
   tags                      = var.tags
 }
+
+################################################################################
+## AWS Config
+################################################################################
 
 module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
@@ -72,6 +80,10 @@ module "config" {
 
   tags = var.tags
 }
+
+################################################################################
+## Inspector
+################################################################################
 
 module "inspector" {
   source  = "cloudposse/inspector/aws"

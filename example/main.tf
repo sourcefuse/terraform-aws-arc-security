@@ -24,7 +24,7 @@ module "tags" {
   project     = var.project
 
   extra_tags = {
-    Repo         = "github.com/sourcefuse/refarch-devops-infra"
+    Repo         = "github.com/sourcefuse/terraform-aws-arc-security"
     MonoRepo     = "True"
     MonoRepoPath = "terraform/security"
   }
@@ -32,8 +32,8 @@ module "tags" {
 
 
 module "cloud_security" {
-  # source      = "git::https://github.com/sourcefuse/terraform-aws-arc-security.git?ref=feature/working-example"
-  source      = "../" // local development
+  source      = "sourcefuse/arc-security/aws"
+  version     = "0.0.1"
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
