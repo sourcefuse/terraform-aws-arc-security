@@ -17,14 +17,13 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "project" {
-  type        = string
-  description = "The project name"
-  default     = ""
+variable "tags" {
+  type        = map(string)
+  description = "Tags for AWS resources"
 }
 
 ############################################################################
-## security hub
+## Security hub
 ############################################################################
 
 variable "enable_security_hub" {
@@ -52,35 +51,6 @@ variable "enabled_security_hub_standards" {
   ]
 }
 
-variable "create_config_iam_role" {
-  description = "Flag to indicate whether an iam role should be created for aws config."
-  type        = bool
-  default     = false
-}
-
-variable "guard_duty_s3_protection_enabled" {
-  description = "Flag to indicate whether S3 protection will be turned on in GuardDuty."
-  type        = bool
-  default     = false
-}
-
-variable "aws_config_managed_rules" {
-  description = <<-DOC
-    A list of AWS Managed Rules that should be enabled on the account.
-
-    See the following for a list of possible rules to enable:
-    https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html
-  DOC
-  type = map(object({
-    description      = string
-    identifier       = string
-    input_parameters = any
-    tags             = map(string)
-    enabled          = bool
-  }))
-  default = {}
-}
-
 variable "security_hub_sns_subscribers" {
   type = map(object({
     protocol               = string
@@ -106,6 +76,16 @@ variable "security_hub_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
+}
+
+############################################################################
+## Guard Duty
+############################################################################
+
+variable "guard_duty_s3_protection_enabled" {
+  description = "Flag to indicate whether S3 protection will be turned on in GuardDuty."
+  type        = bool
+  default     = false
 }
 
 variable "enable_guard_duty" {
@@ -141,6 +121,33 @@ variable "guard_duty_sns_subscribers" {
   DOC
 }
 
+############################################################################
+## AWS Config
+############################################################################
+
+variable "create_config_iam_role" {
+  description = "Flag to indicate whether an iam role should be created for aws config."
+  type        = bool
+  default     = false
+}
+
+variable "aws_config_managed_rules" {
+  description = <<-DOC
+    A list of AWS Managed Rules that should be enabled on the account.
+
+    See the following for a list of possible rules to enable:
+    https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html
+  DOC
+  type = map(object({
+    description      = string
+    identifier       = string
+    input_parameters = any
+    tags             = map(string)
+    enabled          = bool
+  }))
+  default = {}
+}
+
 variable "enable_aws_config" {
   description = "Whether to enable AWS Config"
   type        = bool
@@ -174,6 +181,9 @@ variable "aws_config_sns_subscribers" {
   DOC
 }
 
+############################################################################
+## AWS Inspector
+############################################################################
 
 variable "enable_inspector" {
   description = "Whether to enable Inspector"
@@ -206,9 +216,4 @@ variable "inspector_assessment_event_subscription" {
     topic_arn = string
   }))
   default = {}
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "Tags for AWS resources"
 }
