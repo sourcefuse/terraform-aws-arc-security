@@ -1,7 +1,5 @@
 locals {
 
-  environment               = var.environment
-  project                   = var.project
   name_prefix               = "${var.namespace}-${var.environment}"
   guard_duty_sns_topic_name = "${local.name_prefix}-guard-duty"
 
