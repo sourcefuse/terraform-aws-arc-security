@@ -32,16 +32,17 @@ module "tags" {
 
 
 module "cloud_security" {
-  source      = "sourcefuse/arc-security/aws"
-  version     = "0.0.1"
+  #   source      = "sourcefuse/arc-security/aws"
+  #   version     = "0.0.1"
+  source      = "../"
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
 
-  enable_inspector    = false
+  enable_inspector    = true
   enable_aws_config   = true
   enable_guard_duty   = true
-  enable_security_hub = true
+  enable_security_hub = false
 
   create_config_iam_role = true
 
@@ -49,7 +50,8 @@ module "cloud_security" {
   guard_duty_sns_subscribers   = local.guard_duty_sns_subscribers
   security_hub_sns_subscribers = local.security_hub_sns_subscribers
 
-  aws_config_managed_rules = var.aws_config_managed_rules
+  aws_config_managed_rules       = var.aws_config_managed_rules
+  enabled_security_hub_standards = local.security_hub_standards
 
   create_inspector_iam_role               = var.create_inspector_iam_role
   inspector_enabled_rules                 = var.inspector_enabled_rules

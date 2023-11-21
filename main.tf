@@ -17,12 +17,12 @@ module "security_hub" {
   source  = "cloudposse/security-hub/aws"
   version = "0.10.0"
 
-  count = var.enable_security_hub ? 1 : 0
+  enabled = var.enable_security_hub
 
   name = local.name_prefix
 
   create_sns_topic  = true
-  enabled_standards = var.enabled_security_hub_standards
+  enabled_standards = local.security_hub_standards
   subscribers       = var.security_hub_sns_subscribers
 
   tags = var.tags
@@ -36,7 +36,7 @@ module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
 
-  count = var.enable_guard_duty ? 1 : 0
+  enabled = var.enable_guard_duty
 
   name = local.name_prefix
 
@@ -56,7 +56,7 @@ module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
   version = "1.0.0"
 
-  count = var.enable_aws_config ? 1 : 0
+  enabled = var.enable_aws_config
 
   name = local.name_prefix
   tags = var.tags
@@ -66,7 +66,7 @@ module "config" {
   source  = "cloudposse/config/aws"
   version = "1.1.0"
 
-  count = var.enable_aws_config ? 1 : 0
+  enabled = var.enable_aws_config
 
   name = local.name_prefix
 
@@ -74,8 +74,8 @@ module "config" {
   create_iam_role                  = var.create_config_iam_role
   global_resource_collector_region = var.region
   managed_rules                    = length(var.aws_config_managed_rules) > 0 ? var.aws_config_managed_rules : local.aws_config_managed_rules
-  s3_bucket_id                     = module.aws_config_storage[0].bucket_id
-  s3_bucket_arn                    = module.aws_config_storage[0].bucket_arn
+  s3_bucket_id                     = module.aws_config_storage.bucket_id
+  s3_bucket_arn                    = module.aws_config_storage.bucket_arn
   subscribers                      = var.aws_config_sns_subscribers
 
   tags = var.tags

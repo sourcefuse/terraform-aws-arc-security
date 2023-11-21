@@ -62,7 +62,7 @@ module "this" {
 | <a name="input_enable_guard_duty"></a> [enable\_guard\_duty](#input\_enable\_guard\_duty) | Whether to enable Guard Duty | `bool` | `true` | no |
 | <a name="input_enable_inspector"></a> [enable\_inspector](#input\_enable\_inspector) | Whether to enable Inspector | `bool` | `true` | no |
 | <a name="input_enable_security_hub"></a> [enable\_security\_hub](#input\_enable\_security\_hub) | Whether to enable Security Hub | `bool` | `true` | no |
-| <a name="input_enabled_security_hub_standards"></a> [enabled\_security\_hub\_standards](#input\_enabled\_security\_hub\_standards) | A list of standards/rulesets to enable<br><br>See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/securityhub_standards_subscription#argument-reference<br><br>The possible values are:<br><br>  - standards/aws-foundational-security-best-practices/v/1.0.0<br>  - ruleset/cis-aws-foundations-benchmark/v/1.4.0<br>  - standards/pci-dss/v/3.2.1 | `list(any)` | <pre>[<br>  "standards/aws-foundational-security-best-practices/v/1.0.0",<br>  "ruleset/cis-aws-foundations-benchmark/v/1.4.0"<br>]</pre> | no |
+| <a name="input_enabled_security_hub_standards"></a> [enabled\_security\_hub\_standards](#input\_enabled\_security\_hub\_standards) | A list of standards/rulesets to enable<br><br>See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/securityhub_standards_subscription#argument-reference<br><br>The possible values are:<br><br>  - standards/aws-foundational-security-best-practices/v/1.0.0<br>  - ruleset/cis-aws-foundations-benchmark/v/1.2.0<br>  - standards/pci-dss/v/3.2.1 | `list(any)` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `"poc"` | no |
 | <a name="input_guard_duty_s3_protection_enabled"></a> [guard\_duty\_s3\_protection\_enabled](#input\_guard\_duty\_s3\_protection\_enabled) | Flag to indicate whether S3 protection will be turned on in GuardDuty. | `bool` | `false` | no |
 | <a name="input_guard_duty_sns_subscribers"></a> [guard\_duty\_sns\_subscribers](#input\_guard\_duty\_sns\_subscribers) | A map of subscription configurations for SNS topics<br><br>For more information, see:<br>https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription#argument-reference<br><br>protocol:<br>  The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially<br>  supported, see link) (email is an option but is unsupported in terraform, see link).<br>endpoint:<br>  The endpoint to send data to, the contents will vary with the protocol. (see link for more information)<br>endpoint\_auto\_confirms:<br>  Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty. Default is<br>  false<br>raw\_message\_delivery:<br>  Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).<br>  Default is false | <pre>map(object({<br>    protocol               = string<br>    endpoint               = string<br>    endpoint_auto_confirms = bool<br>    raw_message_delivery   = bool<br>  }))</pre> | n/a | yes |
@@ -76,7 +76,22 @@ module "this" {
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_aws_config_configuration_recorder_id"></a> [aws\_config\_configuration\_recorder\_id](#output\_aws\_config\_configuration\_recorder\_id) | The ID of the AWS Config Recorder |
+| <a name="output_aws_config_iam_role"></a> [aws\_config\_iam\_role](#output\_aws\_config\_iam\_role) | IAM Role used to make read or write requests to the delivery channel and to describe the AWS resources associated with<br>the account. |
+| <a name="output_aws_config_sns_topic"></a> [aws\_config\_sns\_topic](#output\_aws\_config\_sns\_topic) | SNS topic |
+| <a name="output_aws_config_sns_topic_subscriptions"></a> [aws\_config\_sns\_topic\_subscriptions](#output\_aws\_config\_sns\_topic\_subscriptions) | SNS topic subscriptions |
+| <a name="output_aws_inspector_assessment_template"></a> [aws\_inspector\_assessment\_template](#output\_aws\_inspector\_assessment\_template) | The AWS Inspector assessment template |
+| <a name="output_guard_duty_detector"></a> [guard\_duty\_detector](#output\_guard\_duty\_detector) | GuardDuty detector |
+| <a name="output_guard_duty_sns_topic"></a> [guard\_duty\_sns\_topic](#output\_guard\_duty\_sns\_topic) | SNS topic |
+| <a name="output_guard_duty_sns_topic_subscriptions"></a> [guard\_duty\_sns\_topic\_subscriptions](#output\_guard\_duty\_sns\_topic\_subscriptions) | SNS topic subscriptions |
+| <a name="output_inspector_assessment_target"></a> [inspector\_assessment\_target](#output\_inspector\_assessment\_target) | The AWS Inspector assessment target |
+| <a name="output_inspector_aws_cloudwatch_event_rule"></a> [inspector\_aws\_cloudwatch\_event\_rule](#output\_inspector\_aws\_cloudwatch\_event\_rule) | The AWS Inspector event rule |
+| <a name="output_inspector_aws_cloudwatch_event_target"></a> [inspector\_aws\_cloudwatch\_event\_target](#output\_inspector\_aws\_cloudwatch\_event\_target) | The AWS Inspector event target |
+| <a name="output_security_hub_enabled_subscriptions"></a> [security\_hub\_enabled\_subscriptions](#output\_security\_hub\_enabled\_subscriptions) | A list of subscriptions that have been enabled |
+| <a name="output_security_hub_sns_topic"></a> [security\_hub\_sns\_topic](#output\_security\_hub\_sns\_topic) | The SNS topic that was created |
+| <a name="output_security_hub_sns_topic_subscriptions"></a> [security\_hub\_sns\_topic\_subscriptions](#output\_security\_hub\_sns\_topic\_subscriptions) | The SNS topic that was created |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Versioning  

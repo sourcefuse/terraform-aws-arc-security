@@ -20,7 +20,6 @@ func TestTerraformExample(t *testing.T) {
 	// Assert
 	assert := assert.New(t)
 
-	outputValue := terraform.Output(t, terraformOptions, "output_name")
+	outputValue := terraform.Output(t, terraformOptions, "security_hub_enabled_subscriptions")
 	assert.NotNil(outputValue)
-	assert.Equal("output_value", outputValue)
 }

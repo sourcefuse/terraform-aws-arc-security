@@ -19,4 +19,11 @@ locals {
     }
   }
 
+  default_security_hub_standards = [
+    "standards/aws-foundational-security-best-practices/v/1.0.0",
+    "standards/cis-aws-foundations-benchmark/v/1.4.0"
+  ]
+  security_hub_standards = length(var.enabled_security_hub_standards) == 0 ? local.default_security_hub_standards : var.enabled_security_hub_standards
+
+
 }
