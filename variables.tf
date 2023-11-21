@@ -17,67 +17,34 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "project" {
-  type        = string
-  description = "The project name"
-  default     = ""
+variable "tags" {
+  type        = map(string)
+  description = "Tags for AWS resources"
 }
 
 ############################################################################
-## security hub
+## Security hub
 ############################################################################
 
-variable "enabled_standards" {
-  description = "A list of standards to enable in the account"
-  type        = list(string)
-  default     = []
-}
-
-variable "create_sns_topic" {
-  description = "Flag to indicate whether an SNS topic should be created for notifications."
+variable "enable_security_hub" {
+  description = "Whether to enable Security Hub"
   type        = bool
-  default     = false
+  default     = true
 }
 
-variable "create_config_iam_role" {
-  description = "Flag to indicate whether an iam role should be created for aws config."
-  type        = bool
-  default     = false
-}
-
-variable "enable_cloudwatch" {
-  description = "Flag to indicate whether to enable cloudwatch for logging."
-  type        = bool
-  default     = false
-}
-
-variable "s3_protection_enabled" {
-  description = "Flag to indicate whether S3 protection will be turned on in GuardDuty."
-  type        = bool
-  default     = false
-}
-
-variable "force_destroy" {
-  type        = bool
-  description = "A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable"
-  default     = false
-}
-
-variable "managed_rules" {
+variable "enabled_security_hub_standards" {
   description = <<-DOC
-    A list of AWS Managed Rules that should be enabled on the account.
+  A list of standards/rulesets to enable
 
-    See the following for a list of possible rules to enable:
-    https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html
+  See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/securityhub_standards_subscription#argument-reference
+
+  The possible values are:
+
+    - standards/aws-foundational-security-best-practices/v/1.0.0
+    - ruleset/cis-aws-foundations-benchmark/v/1.2.0
+    - standards/pci-dss/v/3.2.1
   DOC
-  type = map(object({
-    description      = string
-    identifier       = string
-    input_parameters = any
-    tags             = map(string)
-    enabled          = bool
-  }))
-  default = {}
+  type        = list(any)
 }
 
 variable "security_hub_sns_subscribers" {
@@ -105,14 +72,22 @@ variable "security_hub_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
+}
+
+############################################################################
+## Guard Duty
+############################################################################
+
+variable "guard_duty_s3_protection_enabled" {
+  description = "Flag to indicate whether S3 protection will be turned on in GuardDuty."
+  type        = bool
+  default     = false
+}
+
+variable "enable_guard_duty" {
+  description = "Whether to enable Guard Duty"
+  type        = bool
+  default     = true
 }
 
 variable "guard_duty_sns_subscribers" {
@@ -140,14 +115,39 @@ variable "guard_duty_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
+}
+
+############################################################################
+## AWS Config
+############################################################################
+
+variable "create_config_iam_role" {
+  description = "Flag to indicate whether an iam role should be created for aws config."
+  type        = bool
+  default     = false
+}
+
+variable "aws_config_managed_rules" {
+  description = <<-DOC
+    A list of AWS Managed Rules that should be enabled on the account.
+
+    See the following for a list of possible rules to enable:
+    https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html
+  DOC
+  type = map(object({
+    description      = string
+    identifier       = string
+    input_parameters = any
+    tags             = map(string)
+    enabled          = bool
+  }))
+  default = {}
+}
+
+variable "enable_aws_config" {
+  description = "Whether to enable AWS Config"
+  type        = bool
+  default     = true
 }
 
 variable "aws_config_sns_subscribers" {
@@ -175,21 +175,16 @@ variable "aws_config_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
-  default = {
-    opsgenie = {
-      protocol               = "https"
-      endpoint               = ""
-      endpoint_auto_confirms = true
-      raw_message_delivery   = false
-    }
-  }
 }
 
+############################################################################
+## AWS Inspector
+############################################################################
 
-variable "create_inspector" {
-  description = "Toggle to create aws inspector"
+variable "enable_inspector" {
+  description = "Whether to enable Inspector"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "create_inspector_iam_role" {
@@ -218,4 +213,3 @@ variable "inspector_assessment_event_subscription" {
   }))
   default = {}
 }
-

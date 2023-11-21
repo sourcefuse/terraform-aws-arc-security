@@ -1,10 +1,10 @@
 terraform {
-  required_version = ">= 1.0"
+  required_version = "~> 1.5"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 2"
+      version = ">= 5.0"
     }
   }
 }
@@ -13,68 +13,83 @@ terraform {
 ## security hub
 ################################################################################
 
-
 module "security_hub" {
   source  = "cloudposse/security-hub/aws"
   version = "0.10.0"
 
+  enabled = var.enable_security_hub
+
   name = local.name_prefix
 
-  create_sns_topic  = var.create_sns_topic
-  enabled_standards = var.enabled_standards
-  subscribers       = length(var.security_hub_sns_subscribers) > 0 ? var.security_hub_sns_subscribers : local.security_hub_sns_subscribers
+  create_sns_topic  = true
+  enabled_standards = local.security_hub_standards
+  subscribers       = var.security_hub_sns_subscribers
 
-  tags = module.tags.tags
+  tags = var.tags
 }
+
+################################################################################
+## Guard Duty
+################################################################################
 
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
 
+  enabled = var.enable_guard_duty
+
   name = local.name_prefix
 
-  create_sns_topic      = var.create_sns_topic
-  enable_cloudwatch     = var.enable_cloudwatch
-  s3_protection_enabled = var.s3_protection_enabled
-  subscribers           = length(var.guard_duty_sns_subscribers) > 0 ? var.guard_duty_sns_subscribers : local.guard_duty_sns_subscribers
-
-  tags = module.tags.tags
+  create_sns_topic          = false
+  enable_cloudwatch         = true
+  s3_protection_enabled     = var.guard_duty_s3_protection_enabled
+  findings_notification_arn = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${local.guard_duty_sns_topic_name}"
+  depends_on                = [module.sns_guard_duty]
+  tags                      = var.tags
 }
+
+################################################################################
+## AWS Config
+################################################################################
 
 module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
   version = "1.0.0"
 
-  name          = local.name_prefix
-  force_destroy = var.force_destroy
+  enabled = var.enable_aws_config
 
-  tags = module.tags.tags
+  name = local.name_prefix
+  tags = var.tags
 }
 
 module "config" {
   source  = "cloudposse/config/aws"
   version = "1.1.0"
 
+  enabled = var.enable_aws_config
+
   name = local.name_prefix
 
-  create_sns_topic                 = var.create_sns_topic
+  create_sns_topic                 = true
   create_iam_role                  = var.create_config_iam_role
-  force_destroy                    = var.force_destroy
   global_resource_collector_region = var.region
-  managed_rules                    = length(var.managed_rules) > 0 ? var.managed_rules : local.managed_rules
+  managed_rules                    = length(var.aws_config_managed_rules) > 0 ? var.aws_config_managed_rules : local.aws_config_managed_rules
   s3_bucket_id                     = module.aws_config_storage.bucket_id
   s3_bucket_arn                    = module.aws_config_storage.bucket_arn
-  subscribers                      = length(var.aws_config_sns_subscribers) > 0 ? var.aws_config_sns_subscribers : local.aws_config_sns_subscribers
+  subscribers                      = var.aws_config_sns_subscribers
 
-  tags = module.tags.tags
+  tags = var.tags
 }
 
-module "inspector" {
+################################################################################
+## Inspector
+################################################################################
 
+module "inspector" {
   source  = "cloudposse/inspector/aws"
   version = "0.4.0"
 
-  enabled = var.create_inspector
+  enabled = var.enable_inspector
 
   name                          = local.name_prefix
   create_iam_role               = var.create_inspector_iam_role
@@ -82,18 +97,3 @@ module "inspector" {
   schedule_expression           = var.inspector_schedule_expression
   assessment_event_subscription = var.inspector_assessment_event_subscription
 }
-
-module "tags" {
-  source  = "sourcefuse/arc-tags/aws"
-  version = "1.2.3"
-
-  environment = local.environment
-  project     = local.project
-
-  extra_tags = {
-    Repo         = "github.com/sourcefuse/terraform-aws-arc-security"
-    MonoRepo     = "True"
-    MonoRepoPath = "terraform/security"
-  }
-}
-
