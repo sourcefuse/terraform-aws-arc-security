@@ -43,7 +43,7 @@ module "guard_duty" {
   create_sns_topic          = false
   enable_cloudwatch         = true
   s3_protection_enabled     = var.guard_duty_s3_protection_enabled
-  findings_notification_arn = "arn:aws:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${local.guard_duty_sns_topic_name}"
+  findings_notification_arn = "arn:${data.aws_partition.current.partition}:sns:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${local.guard_duty_sns_topic_name}"
   depends_on                = [module.sns_guard_duty]
   tags                      = var.tags
 }
