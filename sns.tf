@@ -1,7 +1,7 @@
 locals {
   kms_key_administrators = [
     data.aws_iam_session_context.current.issuer_arn,
-    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+    "arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"
   ]
 
   key_policy = jsonencode({
