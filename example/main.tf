@@ -28,7 +28,6 @@ module "tags" {
   }
 }
 
-
 module "cloud_security" {
   source      = "../"
   region      = var.region
