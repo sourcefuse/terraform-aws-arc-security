@@ -24,16 +24,13 @@ module "tags" {
   project     = var.project
 
   extra_tags = {
-    Repo         = "github.com/sourcefuse/terraform-aws-arc-security"
-    MonoRepo     = "True"
-    MonoRepoPath = "terraform/security"
+    Repo = "github.com/sourcefuse/terraform-aws-arc-security"
   }
 }
 
 
 module "cloud_security" {
-  source      = "sourcefuse/arc-security/aws"
-  version     = "0.0.1"
+  source      = "../"
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
