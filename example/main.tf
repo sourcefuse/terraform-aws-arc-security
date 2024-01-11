@@ -32,8 +32,8 @@ module "tags" {
 
 
 module "cloud_security" {
-  source      = "sourcefuse/arc-security/aws"
-  version     = "0.0.4"
+  source  = "sourcefuse/arc-security/aws"
+  version = "0.0.4"
 
   region      = var.region
   environment = var.environment
