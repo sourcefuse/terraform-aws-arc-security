@@ -13,7 +13,7 @@ terraform {
 ## security hub
 ################################################################################
 module "security_hub" {
-  source = "git::https://github.com/sourcefuse/terraform-aws-security-hub.git?ref=chore/partitions-and-condition-overrides"  // TODO - update this
+  source = "git::https://github.com/sourcefuse/terraform-aws-security-hub.git?ref=chore/partitions-and-condition-overrides" // TODO - update this to the new upstream when PR has been merged (https://github.com/cloudposse/terraform-aws-security-hub/pull/44)
   #  source  = "cloudposse/security-hub/aws"
   #  version = "0.10.0"
   enabled = var.enable_security_hub
