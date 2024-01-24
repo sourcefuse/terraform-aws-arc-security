@@ -12,11 +12,10 @@ terraform {
 ################################################################################
 ## security hub
 ################################################################################
-
 module "security_hub" {
-  source  = "cloudposse/security-hub/aws"
-  version = "0.10.0"
-
+  source = "git::https://github.com/sourcefuse/terraform-aws-security-hub.git?ref=chore/partitions-and-condition-overrides" // TODO - update this to the new upstream when PR has been merged (https://github.com/cloudposse/terraform-aws-security-hub/pull/44)
+  #  source  = "cloudposse/security-hub/aws"
+  #  version = "0.10.0"
   enabled = var.enable_security_hub
 
   name = local.name_prefix
@@ -35,7 +34,6 @@ module "security_hub" {
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
-
   enabled = var.enable_guard_duty
 
   name = local.name_prefix
@@ -55,7 +53,6 @@ module "guard_duty" {
 module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
   version = "1.0.0"
-
   enabled = var.enable_aws_config
 
   name = local.name_prefix
@@ -65,7 +62,6 @@ module "aws_config_storage" {
 module "config" {
   source  = "cloudposse/config/aws"
   version = "1.1.0"
-
   enabled = var.enable_aws_config
 
   name = local.name_prefix
@@ -88,7 +84,6 @@ module "config" {
 module "inspector" {
   source  = "cloudposse/inspector/aws"
   version = "0.4.0"
-
   enabled = var.enable_inspector
 
   name                          = local.name_prefix
@@ -96,4 +91,6 @@ module "inspector" {
   enabled_rules                 = var.inspector_enabled_rules
   schedule_expression           = var.inspector_schedule_expression
   assessment_event_subscription = var.inspector_assessment_event_subscription
+
+  tags = var.tags
 }
