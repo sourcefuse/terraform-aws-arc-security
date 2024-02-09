@@ -5,7 +5,9 @@
 [![Known Vulnerabilities](https://github.com/sourcefuse/terraform-aws-arc-security/actions/workflows/snyk.yaml/badge.svg)](https://github.com/sourcefuse/terraform-aws-arc-security/actions/workflows/snyk.yaml)
 ## Overview
 
-SourceFuse AWS Reference Architecture (ARC) Terraform module for managing Security Hub components.
+The SourceFuse AWS Reference Architecture (ARC) Terraform module streamlines the management of Security Hub components, enhancing security posture and compliance for AWS environments. This module offers simplified configuration and deployment for Security Hub, optimizing resource allocation and threat detection capabilities.
+
+For more information about this repository and its usage, please see [Terraform AWS ARC GitHub SECURITY Module Usage Guide](https://github.com/sourcefuse/terraform-aws-arc-security/blob/main/docs/module-usage-guide/README.md).
 
 ## Usage
 
@@ -14,7 +16,7 @@ To see a full example, check out the [main.tf](./example/main.tf) file in the ex
 ```hcl
 module "cloud_security" {
   source      = "sourcefuse/arc-security/aws"
-  version     = "0.0.4"
+  version     = "1.0.2"
   region      = var.region
   environment = var.environment
   namespace   = var.namespace
@@ -54,7 +56,7 @@ module "cloud_security" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.31.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.36.0 |
 
 ## Modules
 
@@ -121,50 +123,3 @@ module "cloud_security" {
 | <a name="output_security_hub_sns_topic"></a> [security\_hub\_sns\_topic](#output\_security\_hub\_sns\_topic) | The SNS topic that was created |
 | <a name="output_security_hub_sns_topic_subscriptions"></a> [security\_hub\_sns\_topic\_subscriptions](#output\_security\_hub\_sns\_topic\_subscriptions) | The SNS topic that was created |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-### Git commits
-
-while Contributing or doing git commit please specify the breaking change in your commit message whether its major,minor or patch
-
-For Example
-
-```sh
-git commit -m "your commit message #major"
-```
-By specifying this , it will bump the version and if you dont specify this in your commit message then by default it will consider patch and will bump that accordingly
-
-
-## Development
-
-### Prerequisites
-
-- [terraform](https://learn.hashicorp.com/terraform/getting-started/install#installing-terraform)
-- [terraform-docs](https://github.com/segmentio/terraform-docs)
-- [pre-commit](https://pre-commit.com/#install)
-- [golang](https://golang.org/doc/install#install)
-- [golint](https://github.com/golang/lint#installation)
-
-### Configurations
-
-- Configure pre-commit hooks
-  ```sh
-  pre-commit install
-  ```
-
-### Tests
-- Tests are available in `test` directory
-- Configure the dependencies
-  ```sh
-  cd test/
-  go mod init github.com/sourcefuse/terraform-aws-refarch-<module_name>
-  go get github.com/gruntwork-io/terratest/modules/terraform
-  ```
-- Now execute the test  
-  ```sh
-  go test -timeout  30m
-  ```
-
-## Authors
-
-This project is authored by:
-- SourceFuse
