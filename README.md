@@ -123,3 +123,50 @@ module "cloud_security" {
 | <a name="output_security_hub_sns_topic"></a> [security\_hub\_sns\_topic](#output\_security\_hub\_sns\_topic) | The SNS topic that was created |
 | <a name="output_security_hub_sns_topic_subscriptions"></a> [security\_hub\_sns\_topic\_subscriptions](#output\_security\_hub\_sns\_topic\_subscriptions) | The SNS topic that was created |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+### Git commits
+
+while Contributing or doing git commit please specify the breaking change in your commit message whether its major,minor or patch
+
+For Example
+
+```sh
+git commit -m "your commit message #major"
+```
+By specifying this , it will bump the version and if you dont specify this in your commit message then by default it will consider patch and will bump that accordingly
+
+
+## Development
+
+### Prerequisites
+
+- [terraform](https://learn.hashicorp.com/terraform/getting-started/install#installing-terraform)
+- [terraform-docs](https://github.com/segmentio/terraform-docs)
+- [pre-commit](https://pre-commit.com/#install)
+- [golang](https://golang.org/doc/install#install)
+- [golint](https://github.com/golang/lint#installation)
+
+### Configurations
+
+- Configure pre-commit hooks
+  ```sh
+  pre-commit install
+  ```
+
+### Tests
+- Tests are available in `test` directory
+- Configure the dependencies
+  ```sh
+  cd test/
+  go mod init github.com/sourcefuse/terraform-aws-refarch-<module_name>
+  go get github.com/gruntwork-io/terratest/modules/terraform
+  ```
+- Now execute the test  
+  ```sh
+  go test -timeout  30m
+  ```
+
+## Authors
+
+This project is authored by:
+- SourceFuse
