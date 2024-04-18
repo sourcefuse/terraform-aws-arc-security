@@ -71,6 +71,7 @@ variable "security_hub_sns_subscribers" {
     Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
     Default is false
   DOC
+  default     = null
 }
 
 ############################################################################
@@ -96,6 +97,7 @@ variable "guard_duty_sns_subscribers" {
     endpoint_auto_confirms = bool
     raw_message_delivery   = bool
   }))
+  default     = null
   description = <<-DOC
   A map of subscription configurations for SNS topics
 
@@ -186,16 +188,21 @@ variable "enable_inspector" {
   default     = true
 }
 
-variable "create_inspector_iam_role" {
-  description = "Toggle to create aws inspector iam role"
+variable "enable_inspector_at_orgnanization" {
   type        = bool
-  default     = true
+  description = "Whether to enable Inspecter at Org level, if false account_list should be provided "
+  default     = false
 }
 
-variable "inspector_enabled_rules" {
-  description = "list of rules to pass to inspector"
+variable "inspector_account_list" {
   type        = list(string)
-  default     = []
+  description = "List of Account for which inspector has to be enabled"
+}
+
+variable "inspector_resource_types" {
+  type        = list(string)
+  description = "Type of resources to scan. Valid values are EC2, ECR, LAMBDA and LAMBDA_CODE. At least one item is required."
+  default     = ["EC2", "ECR"]
 }
 
 variable "inspector_schedule_expression" {
@@ -204,11 +211,30 @@ variable "inspector_schedule_expression" {
   default     = "rate(7 days)"
 }
 
-variable "inspector_assessment_event_subscription" {
-  description = "Configures sending notifications about a specified assessment template event to a designated SNS topic"
+variable "inspector_sns_subscribers" {
   type = map(object({
-    event     = string
-    topic_arn = string
+    protocol               = string
+    endpoint               = string
+    endpoint_auto_confirms = bool
+    raw_message_delivery   = bool
   }))
-  default = {}
+  description = <<-DOC
+  A map of subscription configurations for SNS topics
+
+  For more information, see:
+  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription#argument-reference
+
+  protocol:
+    The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially
+    supported, see link) (email is an option but is unsupported in terraform, see link).
+  endpoint:
+    The endpoint to send data to, the contents will vary with the protocol. (see link for more information)
+  endpoint_auto_confirms:
+    Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty. Default is
+    false
+  raw_message_delivery:
+    Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property).
+    Default is false
+  DOC
+  default     = null
 }

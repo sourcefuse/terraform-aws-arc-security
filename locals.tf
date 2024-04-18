@@ -2,6 +2,9 @@ locals {
   name_prefix               = "${var.namespace}-${var.environment}"
   guard_duty_sns_topic_name = "${local.name_prefix}-guard-duty"
 
+  enable_just_security_hub_notification = var.security_hub_sns_subscribers != null && var.enable_security_hub == false ? true : false # If SecurityHub is already enabled, just enable notification
+  enable_just_guard_duty_notification   = var.guard_duty_sns_subscribers != null && var.enable_guard_duty == false ? true : false
+
   aws_config_managed_rules = {
     access-keys-rotated = {
       identifier  = "ACCESS_KEYS_ROTATED"

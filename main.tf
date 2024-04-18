@@ -81,15 +81,16 @@ module "config" {
 ################################################################################
 
 module "inspector" {
-  source  = "cloudposse/inspector/aws"
-  version = "0.4.0"
-  enabled = var.enable_inspector
+  source = "./modules/inspector"
 
-  name                          = local.name_prefix
-  create_iam_role               = var.create_inspector_iam_role
-  enabled_rules                 = var.inspector_enabled_rules
-  schedule_expression           = var.inspector_schedule_expression
-  assessment_event_subscription = var.inspector_assessment_event_subscription
+  namespace           = var.namespace
+  environment         = var.environment
+  schedule_expression = var.inspector_schedule_expression
 
-  tags = var.tags
+  enable_inspector_at_orgnanization = var.enable_inspector_at_orgnanization
+
+  account_list   = var.inspector_account_list
+  resource_types = var.inspector_resource_types
+  subscribers    = var.inspector_sns_subscribers
+
 }

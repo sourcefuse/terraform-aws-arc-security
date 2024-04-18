@@ -51,16 +51,6 @@ output "aws_config_sns_topic_subscriptions" {
   value       = module.config.sns_topic_subscriptions
 }
 
-output "inspector_assessment_target" {
-  description = "The AWS Inspector assessment target"
-  value       = module.inspector.inspector_assessment_target
-}
-
-output "aws_inspector_assessment_template" {
-  description = "The AWS Inspector assessment template"
-  value       = module.inspector.aws_inspector_assessment_template
-}
-
 output "inspector_aws_cloudwatch_event_rule" {
   description = "The AWS Inspector event rule"
   value       = module.inspector.aws_cloudwatch_event_rule
