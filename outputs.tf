@@ -53,10 +53,10 @@ output "aws_config_sns_topic_subscriptions" {
 
 output "inspector_aws_cloudwatch_event_rule" {
   description = "The AWS Inspector event rule"
-  value       = module.inspector.aws_cloudwatch_event_rule
+  value       = var.enable_inspector ? module.inspector[0].aws_cloudwatch_event_rule : null
 }
 
 output "inspector_aws_cloudwatch_event_target" {
   description = "The AWS Inspector event target"
-  value       = module.inspector.aws_cloudwatch_event_target
+  value       = var.enable_inspector ? module.inspector[0].aws_cloudwatch_event_target : null
 }

@@ -83,6 +83,8 @@ module "config" {
 module "inspector" {
   source = "./modules/inspector"
 
+  count = var.enable_inspector ? 1 : 0
+
   namespace           = var.namespace
   environment         = var.environment
   schedule_expression = var.inspector_schedule_expression
