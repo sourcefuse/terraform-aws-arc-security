@@ -33,7 +33,7 @@ module "security_hub" {
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
-  enabled = var.enable_guard_duty
+  count   = var.enable_guard_duty ? 1 : 0
 
   name = local.name_prefix
 
@@ -81,15 +81,18 @@ module "config" {
 ################################################################################
 
 module "inspector" {
-  source  = "cloudposse/inspector/aws"
-  version = "0.4.0"
-  enabled = var.enable_inspector
+  source = "./modules/inspector"
 
-  name                          = local.name_prefix
-  create_iam_role               = var.create_inspector_iam_role
-  enabled_rules                 = var.inspector_enabled_rules
-  schedule_expression           = var.inspector_schedule_expression
-  assessment_event_subscription = var.inspector_assessment_event_subscription
+  count = var.enable_inspector ? 1 : 0
 
-  tags = var.tags
+  namespace           = var.namespace
+  environment         = var.environment
+  schedule_expression = var.inspector_schedule_expression
+
+  enable_inspector_at_orgnanization = var.enable_inspector_at_orgnanization
+
+  account_list   = var.inspector_account_list
+  resource_types = var.inspector_resource_types
+  subscribers    = var.inspector_sns_subscribers
+
 }

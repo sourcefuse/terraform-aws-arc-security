@@ -15,17 +15,17 @@ output "security_hub_sns_topic_subscriptions" {
 
 output "guard_duty_detector" {
   description = "GuardDuty detector"
-  value       = module.guard_duty.guardduty_detector
+  value       = var.enable_guard_duty ? module.guard_duty[0].guardduty_detector : null
 }
 
 output "guard_duty_sns_topic" {
   description = "SNS topic"
-  value       = module.guard_duty.sns_topic
+  value       = var.enable_guard_duty ? module.guard_duty[0].sns_topic : null
 }
 
 output "guard_duty_sns_topic_subscriptions" {
   description = "SNS topic subscriptions"
-  value       = module.guard_duty.sns_topic_subscriptions
+  value       = var.enable_guard_duty ? module.guard_duty[0].sns_topic_subscriptions : null
 }
 
 output "aws_config_configuration_recorder_id" {
@@ -51,22 +51,12 @@ output "aws_config_sns_topic_subscriptions" {
   value       = module.config.sns_topic_subscriptions
 }
 
-output "inspector_assessment_target" {
-  description = "The AWS Inspector assessment target"
-  value       = module.inspector.inspector_assessment_target
-}
-
-output "aws_inspector_assessment_template" {
-  description = "The AWS Inspector assessment template"
-  value       = module.inspector.aws_inspector_assessment_template
-}
-
 output "inspector_aws_cloudwatch_event_rule" {
   description = "The AWS Inspector event rule"
-  value       = module.inspector.aws_cloudwatch_event_rule
+  value       = var.enable_inspector ? module.inspector[0].aws_cloudwatch_event_rule : null
 }
 
 output "inspector_aws_cloudwatch_event_target" {
   description = "The AWS Inspector event target"
-  value       = module.inspector.aws_cloudwatch_event_target
+  value       = var.enable_inspector ? module.inspector[0].aws_cloudwatch_event_target : null
 }
