@@ -12,7 +12,7 @@ module "guard_duty_sns_topic" {
 
 resource "aws_sns_topic_policy" "sns_topic_guard_duty" {
   count  = local.enable_just_guard_duty_notification ? 1 : 0
-  arn    = module.guard_duty_sns_topic[0].sns_topic_arn
+  arn    = local.enable_just_guard_duty_notification ? module.guard_duty_sns_topic[0].sns_topic_arn : null
   policy = data.aws_iam_policy_document.guard_duty_sns_topic_policy[0].json
 }
 
@@ -54,5 +54,5 @@ resource "aws_cloudwatch_event_rule" "guard_duty_findings" {
 resource "aws_cloudwatch_event_target" "guard_duty_imported_findings" {
   count = local.enable_just_guard_duty_notification == true ? 1 : 0
   rule  = aws_cloudwatch_event_rule.guard_duty_findings[0].name
-  arn   = local.enable_just_guard_duty_notification ? module.guard_duty_sns_topic.arn : ""
+  arn   = local.enable_just_guard_duty_notification ? module.guard_duty_sns_topic[0].sns_topic_arn : ""
 }

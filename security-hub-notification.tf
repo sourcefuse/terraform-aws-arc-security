@@ -78,6 +78,6 @@ resource "aws_cloudwatch_event_rule" "imported_findings" {
 
 resource "aws_cloudwatch_event_target" "security_hub_imported_findings" {
   count = local.enable_just_security_hub_notification ? 1 : 0
-  rule  = aws_cloudwatch_event_rule.imported_findings[0].name
-  arn   = local.enable_just_security_hub_notification ? module.securityhub_sns_topic.arn : ""
+  rule  = local.enable_just_security_hub_notification ? aws_cloudwatch_event_rule.imported_findings[0].name : null
+  arn   = local.enable_just_security_hub_notification ? module.securityhub_sns_topic[0].arn : ""
 }

@@ -15,17 +15,17 @@ output "security_hub_sns_topic_subscriptions" {
 
 output "guard_duty_detector" {
   description = "GuardDuty detector"
-  value       = module.guard_duty.guardduty_detector
+  value       = var.enable_guard_duty ? module.guard_duty[0].guardduty_detector : null
 }
 
 output "guard_duty_sns_topic" {
   description = "SNS topic"
-  value       = module.guard_duty.sns_topic
+  value       = var.enable_guard_duty ? module.guard_duty[0].sns_topic : null
 }
 
 output "guard_duty_sns_topic_subscriptions" {
   description = "SNS topic subscriptions"
-  value       = module.guard_duty.sns_topic_subscriptions
+  value       = var.enable_guard_duty ? module.guard_duty[0].sns_topic_subscriptions : null
 }
 
 output "aws_config_configuration_recorder_id" {

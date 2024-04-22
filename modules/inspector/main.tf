@@ -23,6 +23,11 @@ resource "aws_inspector2_enabler" "this" {
   count          = var.enable_inspector_at_orgnanization ? 0 : 1
   account_ids    = var.account_list
   resource_types = var.resource_types
+
+  timeouts {
+    create = "30m"
+    delete = "30m"
+  }
 }
 
 resource "aws_cloudwatch_event_rule" "this" {

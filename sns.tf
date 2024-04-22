@@ -23,7 +23,7 @@ module "sns_guard_duty" {
 
   name              = "${local.name_prefix}-guard-duty"
   subscribers       = var.guard_duty_sns_subscribers
-  kms_master_key_id = aws_kms_key.this[0].arn
+  kms_master_key_id = var.enable_guard_duty ? aws_kms_key.this[0].arn : null
   sqs_dlq_enabled   = false
 
   tags = var.tags

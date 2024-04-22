@@ -33,7 +33,7 @@ module "security_hub" {
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
   version = "0.5.0"
-  enabled = var.enable_guard_duty
+  count   = var.enable_guard_duty ? 1 : 0
 
   name = local.name_prefix
 
