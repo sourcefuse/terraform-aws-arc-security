@@ -54,8 +54,9 @@ module "aws_config_storage" {
   version = "1.0.0"
   enabled = var.enable_aws_config
 
-  name = local.name_prefix
-  tags = var.tags
+  name          = local.name_prefix
+  force_destroy = var.force_destroy
+  tags          = var.tags
 }
 
 module "config" {
