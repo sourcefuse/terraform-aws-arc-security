@@ -150,6 +150,11 @@ variable "enable_aws_config" {
   type        = bool
   default     = true
 }
+variable "force_destroy" {
+  type        = bool
+  description = "(Optional, Default:false ) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable"
+  default     = false
+}
 
 variable "aws_config_sns_subscribers" {
   type = map(object({
