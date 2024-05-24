@@ -19,6 +19,11 @@ resource "aws_inspector2_organization_configuration" "this" {
   }
 }
 
+resource "aws_inspector2_member_association" "this" {
+  for_each   = toset(var.account_list)
+  account_id = each.value
+}
+
 resource "aws_inspector2_enabler" "this" {
   count          = var.enable_inspector_at_orgnanization ? 0 : 1
   account_ids    = var.account_list
