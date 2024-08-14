@@ -1,20 +1,9 @@
-terraform {
-  required_version = "~> 1.5"
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 5.0"
-    }
-  }
-}
-
 ################################################################################
 ## security hub
 ################################################################################
 module "security_hub" {
   source  = "cloudposse/security-hub/aws"
-  version = "0.12.0"
+  version = "0.12.2"
   enabled = var.enable_security_hub
 
   name = local.name_prefix
@@ -32,7 +21,7 @@ module "security_hub" {
 
 module "guard_duty" {
   source  = "cloudposse/guardduty/aws"
-  version = "0.5.0"
+  version = "0.6.0"
   count   = var.enable_guard_duty ? 1 : 0
 
   name = local.name_prefix
@@ -51,7 +40,7 @@ module "guard_duty" {
 
 module "aws_config_storage" {
   source  = "cloudposse/config-storage/aws"
-  version = "1.0.0"
+  version = "1.0.2"
   enabled = var.enable_aws_config
 
   name          = local.name_prefix
@@ -61,7 +50,7 @@ module "aws_config_storage" {
 
 module "config" {
   source  = "cloudposse/config/aws"
-  version = "1.1.0"
+  version = "1.5.2"
   enabled = var.enable_aws_config
 
   name = local.name_prefix
