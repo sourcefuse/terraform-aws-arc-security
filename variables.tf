@@ -216,6 +216,12 @@ variable "inspector_schedule_expression" {
   default     = "rate(7 days)"
 }
 
+variable "add_inspector_member_accounts" {
+  type        = bool
+  description = "Whether to associate as a member account with your Amazon Inspector delegated administrator account."
+  default     = false
+}
+
 variable "inspector_sns_subscribers" {
   type = map(object({
     protocol               = string

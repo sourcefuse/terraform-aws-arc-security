@@ -20,7 +20,7 @@ resource "aws_inspector2_organization_configuration" "this" {
 }
 
 resource "aws_inspector2_member_association" "this" {
-  for_each   = toset(var.account_list)
+  for_each   = var.add_inspector_member_accounts ? toset(var.account_list) : toset([])
   account_id = each.value
 }
 
