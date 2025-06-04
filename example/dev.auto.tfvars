@@ -1,5 +1,5 @@
 region      = "us-east-1"
-environment = "dev"
+environment = "poc"
 namespace   = "arc"
 project     = "aws-modules"
 
