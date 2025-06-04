@@ -9,3 +9,5 @@ data "aws_ssm_parameter" "security_hub" {
 data "aws_ssm_parameter" "aws_config" {
   name = "/${var.namespace}/${var.environment}/aws-config/opsgenie/api-key"
 }
+
+data "aws_caller_identity" "current" {}
