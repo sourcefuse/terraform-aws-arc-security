@@ -19,6 +19,4 @@ aws_config_managed_rules = {
   }
 }
 
-create_inspector_iam_role     = true
-inspector_enabled_rules       = ["cis"]
 inspector_schedule_expression = "rate(7 days)"
