@@ -4,6 +4,12 @@ variable "enable_inspector_at_orgnanization" {
   default     = false
 }
 
+variable "add_inspector_member_accounts" {
+  type        = bool
+  description = "Whether to associate as a member account with your Amazon Inspector delegated administrator account."
+  default     = false
+}
+
 variable "account_list" {
   type        = list(string)
   description = "List of Account for which inspector has to be enabled"

@@ -81,8 +81,9 @@ module "inspector" {
 
   enable_inspector_at_orgnanization = var.enable_inspector_at_orgnanization
 
-  account_list   = var.inspector_account_list
-  resource_types = var.inspector_resource_types
-  subscribers    = var.inspector_sns_subscribers
+  account_list                  = var.inspector_account_list
+  add_inspector_member_accounts = var.add_inspector_member_accounts
+  resource_types                = var.inspector_resource_types
+  subscribers                   = var.inspector_sns_subscribers
 
 }
