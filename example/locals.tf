@@ -1,24 +1,24 @@
 locals {
   aws_config_sns_subscribers = {
     opsgenie = {
-      protocol               = "https"
-      endpoint               = data.aws_ssm_parameter.aws_config.value
+      protocol               = "email"
+      endpoint               = "devops-team@example.com"
       endpoint_auto_confirms = true
       raw_message_delivery   = false
     }
   }
   guard_duty_sns_subscribers = {
     opsgenie = {
-      protocol               = "https"
-      endpoint               = data.aws_ssm_parameter.guard_duty.value
+      protocol               = "email"
+      endpoint               = "devops-team@example.com"
       endpoint_auto_confirms = true
       raw_message_delivery   = false
     }
   }
   security_hub_sns_subscribers = {
     opsgenie = {
-      protocol               = "https"
-      endpoint               = data.aws_ssm_parameter.security_hub.value
+      protocol               = "email"
+      endpoint               = "devops-team@example.com"
       endpoint_auto_confirms = true
       raw_message_delivery   = false
     }
@@ -26,8 +26,8 @@ locals {
 
   inspector_sns_subscribers = {
     opsgenie = {
-      protocol               = "https"
-      endpoint               = data.aws_ssm_parameter.security_hub.value
+      protocol               = "email"
+      endpoint               = "devops-team@example.com"
       endpoint_auto_confirms = true
       raw_message_delivery   = false
     }
