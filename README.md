@@ -30,6 +30,8 @@ Enables and configures AWS security services — GuardDuty, Security Hub, AWS Co
 - SNS topics for security findings notifications
 - IAM roles for Config recorder
 
+For more information about this repository and its usage, please see [Terraform AWS Cloud Security Module Usage Guide](https://github.com/sourcefuse/terraform-aws-arc-security/blob/main/docs/module-usage-guide/README.md).
+
 ## Quickstart
 
 ```hcl
