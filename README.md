@@ -21,6 +21,10 @@
 
 Enables and configures AWS security services — GuardDuty, Security Hub, AWS Config, and Inspector — with SNS notifications.
 
+## Architecture
+
+![Architecture Diagram](./static/arch.png)
+
 ## What It Does
 
 - GuardDuty threat detection with SNS alerts
